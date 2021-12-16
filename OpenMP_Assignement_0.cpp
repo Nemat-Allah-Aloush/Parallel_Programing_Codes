@@ -3,8 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 
-int main(int argc, char *argv[]) {
-  
+int main(int argc, char *argv[]) { 
   int num_words = 0;
   int i=0;
 // Parallel loop to check each char of the passed string  
