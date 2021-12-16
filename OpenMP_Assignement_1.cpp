@@ -3,9 +3,10 @@
 #include <stdio.h>
 #include <iostream>
 using namespace std;
+// defining a function to find the maximum of the vector
 void find_max(int n, double* vector, int numThreads)
 {
-  double max_element = vector[0];     // intializing the maximum value if the generated vector
+  double max_element = vector[0];     // intializing the maximum value of the generated vector
   double itime, ftime, exec_time;     // Declaring some variables to calculate the time of execution
   omp_set_dynamic(0);                 // Explicitly disable dynamic teams
   omp_set_num_threads(numThreads);    // Use amount of (numThreads) threads for all consecutive parallel regions
@@ -32,6 +33,7 @@ int main(int argc, char* argv[]) {
     //correctness of the algorithm in the first run
 	  //printf("vector[%d] = %f\n", i, vector[i]);
   }  
+  // Calling the find_max function ten different times with num_threads changing from 1 to 10
   for (int j=1; j<= 10; j++)
   {
     printf("\nNum of threads %d \t", j); 
