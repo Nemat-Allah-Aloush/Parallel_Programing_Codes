@@ -3,20 +3,8 @@
 #include <stdio.h>
 #include <iostream>
 using namespace std;
-int main(int argc, char* argv[]) {
-  // Reading the first arg : Length of vector
-  int n = atoi(argv[1]);
-  // Reading the second arg : Number of Threads
-  int numThreads=atoi(argv[2]);
-  // Generating the vector
-  double* vector = new double[n];
-  for (long int i = 0; i < n; i++) {
-    vector[i] = (double)rand() / RAND_MAX;
-    // Printing the generated vector, just for checking the 
-    //correctness of the algorithm in the first run
-	  //printf("vector[%d] = %f\n", i, vector[i]);
-  }
-  printf("\nNum of threads %d \t", numThreads); 
+void find_max(int n, double* vector, int numThreads)
+{
   double max_element = vector[0];     // intializing the maximum value if the generated vector
   double itime, ftime, exec_time;     // Declaring some variables to calculate the time of execution
   omp_set_dynamic(0);                 // Explicitly disable dynamic teams
@@ -32,5 +20,22 @@ int main(int argc, char* argv[]) {
   exec_time = ftime - itime;          // Calculating how much time spent
   printf("Time taken %f\t", exec_time);   // Printing the execution time
   printf(" Max value %f ", max_element);  //Printing the Max value found
+}
+int main(int argc, char* argv[]) {
+  // Reading the first arg : Length of vector
+  int n = atoi(argv[1]);
+  // Generating the vector
+  double* vector = new double[n];
+  for (long int i = 0; i <= n; i++) {
+    vector[i] = (double)rand() / RAND_MAX;
+    // Printing the generated vector, just for checking the 
+    //correctness of the algorithm in the first run
+	  //printf("vector[%d] = %f\n", i, vector[i]);
+  }  
+  for (int j=1; j<= 10; j++)
+  {
+    printf("\nNum of threads %d \t", j); 
+    find_max(n,vector,j);
+  }
   delete[] vector;  
 }
