@@ -15,7 +15,7 @@ int main(int argc, char** argv)
 	{
 		throw invalid_argument("For this task only two processers are required");
 	}
-    ////////// Calculating the bandwidth and latency////////////////
+    ////////// Calculating the bandwidth ////////////////
     // for loop with length 1,000,000 for changing the length of the message
 	for (int len = 1; len <= 1000000; len *= 10)
 	{
@@ -46,11 +46,38 @@ int main(int argc, char** argv)
 			double num_butes = len * sizeof(int);
 			double num_Mbutes = num_butes / 1024 / 1024;
 			double bandwidth = 2 * num_Mbutes * n / time;
-			double latency = time / (2 * n);
-			cout << "Message length  " << len<< "    Bandwidth MB/s  " << bandwidth<<"   Latency  " << latency <<endl;
+			cout << "Message length  " << len<< "  Bandwidth MB/s  " << bandwidth<<endl;
 		}
 		free(message);
 	}
+    ////////// Calculating the latency ////////////////
+	int signal_message = 1;
+		if (rank == 0)  // timing is held by process 0
+		{
+			start_time = MPI_Wtime();
+		}
+        // repeating the exchange of messages 10 times
+		for (int i = 1; i <= 10; i ++)
+		{
+			if (rank == 0)
+			{
+				MPI_Send(&signal_message, 0, MPI_INT, 1, 0, MPI_COMM_WORLD);
+				MPI_Recv(&signal_message, 0, MPI_INT, 1, 0, MPI_COMM_WORLD, &status);
+
+			}
+			else if (rank == 1)
+			{
+				MPI_Recv(&signal_message, 0, MPI_INT, 0, 0, MPI_COMM_WORLD, &status);
+				MPI_Send(&signal_message, 0, MPI_INT, 0, 0, MPI_COMM_WORLD);
+			}
+		}
+		if (rank == 0) // process 0 prints the Latency
+		{
+			time = MPI_Wtime() - start_time;
+			double latency = time / (2 * n);
+			cout << "Latency  " <<  latency << endl;
+
+		}
 	MPI_Finalize();
 	return 0;
 }
