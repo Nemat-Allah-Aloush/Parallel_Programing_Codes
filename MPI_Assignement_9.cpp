@@ -34,7 +34,7 @@ int main(int argc, char** argv)
 	//Gathering the local sums in a cascade way
 	for (int level = 2; level <= size; level *= 2)
 	{
-		// Threads with even rank number will receive the parts of the sum
+		// Threads that will receive the parts of the sum
 		if (rank % level == 0)
 		{
 				int temp;
@@ -42,7 +42,7 @@ int main(int argc, char** argv)
 				local_sum += temp;
 				cout << "Level: " << level << "  Receiver thread: " << rank << "  Sender thread:  " << status.MPI_SOURCE << "  value:  "<< temp << "  Accumulated total:  " << local_sum<<endl;
 		}
-		// Threads with odd rank number will send their parts of the sum
+		// Threads that will send their parts of the sum
 		else
 		{
 			MPI_Send(&local_sum, 1, MPI_INT, rank - (rank % level), 0, MPI_COMM_WORLD);
