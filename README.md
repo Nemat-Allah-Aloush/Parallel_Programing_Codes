@@ -1,7 +1,7 @@
 ## Parallel Programing Codes
 Implementing Tasks in OpenMP/MPI C++.
 
-The tasks are assignements for Parallel Programing Course in ITMO university.
+The tasks are assignements for Parallel Programing Course at ITMO university.
 
 #### 1.[Counting words in a line - OpenMp](https://github.com/neematAllosh/Parallel_Programing_Codes/blob/master/OMP_Counting_words.cpp)
 The program aims to count words in a line. Any sequence of characters without separators is considered a word. Separators are spaces, tabs, newlines.
